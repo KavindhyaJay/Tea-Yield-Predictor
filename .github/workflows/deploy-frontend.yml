@@ -32,7 +32,7 @@ jobs:
         working-directory: web-app
         run: npm run build
         env:
-          VITE_API_URL: https://teayield-backend.onrender.com
+          VITE_API_URL: https://tea-yield-predictor.onrender.com
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
