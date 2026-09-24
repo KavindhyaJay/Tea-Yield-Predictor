@@ -1,0 +1,9 @@
+# Use the SAME versions as the notebook environment (conda env "tea_ml"),
+# otherwise the saved scikit-learn pipeline may fail to load.
+fastapi
+uvicorn[standard]
+pandas
+numpy
+scikit-learn
+catboost
+joblib
