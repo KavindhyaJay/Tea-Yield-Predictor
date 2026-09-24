@@ -18,6 +18,7 @@ import joblib
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
 
 TARGET = "Yield_Month"
 FIELD = "Field Key"
@@ -92,6 +93,30 @@ def _dense(matrix):
     return np.asarray(matrix, dtype=float)
 
 
+def _restore_imputer_compatibility(root):
+    """Repair SimpleImputer state saved by older scikit-learn versions."""
+    visited = set()
+
+    def visit(value):
+        if value is None or id(value) in visited:
+            return
+        visited.add(id(value))
+        if isinstance(value, SimpleImputer) and not hasattr(value, "_fill_dtype"):
+            statistics = getattr(value, "statistics_", None)
+            value._fill_dtype = getattr(statistics, "dtype", np.dtype("float64"))
+        if isinstance(value, dict):
+            for item in value.values():
+                visit(item)
+        elif isinstance(value, (list, tuple, set)):
+            for item in value:
+                visit(item)
+        elif hasattr(value, "__dict__"):
+            for item in vars(value).values():
+                visit(item)
+
+    visit(root)
+
+
 # ----------------------------------------------------------------------
 # service
 # ----------------------------------------------------------------------
@@ -107,6 +132,8 @@ class TeaYieldService:
             self.pipeline = bundle
             self.feature_columns = list(self.pipeline.feature_names_in_)
             self.metrics = DEFAULT_METRICS
+
+        _restore_imputer_compatibility(self.pipeline)
 
         self.preprocess = self.pipeline[:-1]
         self.model = self.pipeline[-1]
