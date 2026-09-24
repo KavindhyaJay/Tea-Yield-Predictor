@@ -18,8 +18,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 MODEL_PATH = os.getenv("MODEL_PATH", str(BASE_DIR / "model" / "catboost_tea_yield_pipeline.joblib"))
 DATA_PATH = os.getenv("DATA_PATH", str(BASE_DIR / "data" / "MATTAKELLE_2021_2025_WITH_METEOROLOGY.csv"))
 HISTORY_PATH = os.getenv("HISTORY_PATH", str(BASE_DIR / "data" / "history.db"))
-FRONTEND_ORIGINS = os.getenv("FRONTEND_ORIGINS",
-                             "http://localhost:5173,http://127.0.0.1:5173").split(",")
+FRONTEND_ORIGINS = [origin.strip() for origin in os.getenv(
+    "FRONTEND_ORIGINS",
+    "http://localhost:5173,http://127.0.0.1:5173,https://kavindhyajay.github.io",
+).split(",") if origin.strip()]
 
 app = FastAPI(title="TeaYield Predictor API", version="1.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=FRONTEND_ORIGINS,
