@@ -32,9 +32,9 @@ export const shapValues = [
 export const featureImportance = [
   { feature: 'Last 12 Months YPH - Nitrogen', value: 18.42 },
   { feature: 'Plucking Average - Month', value: 11.63 },
-  { feature: 'GL/Ha/Rd - Month', value: 9.85 },
+  { feature: 'GL/Ha/Rd -Month', value: 9.85 },
   { feature: 'Rainfall', value: 8.21 },
-  { feature: 'Nitrogen per Hect - Month', value: 6.94 },
+  { feature: 'Nitrogen per Hect- Month', value: 6.94 },
   { feature: 'Extent', value: 6.12 },
   { feature: 'LPH - Month', value: 5.48 },
   { feature: 'Age as at 31/03/24', value: 4.87 },
