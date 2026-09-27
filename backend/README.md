@@ -36,8 +36,6 @@ Check it: <http://127.0.0.1:8000/api/health> and the interactive docs at
 | POST | `/api/predict` | one prediction + SHAP waterfall values; saved to history |
 | POST | `/api/explain` | SHAP for the last inputs + global importance, beeswarm, dependence |
 | GET | `/api/predictions` | prediction history (SQLite, `data/history.db`) |
-| GET | `/api/forecast?years=2026,2027&field_key=10` | monthly forecast for every field |
-| GET | `/api/forecast.csv` | the same forecast as a CSV download |
 
 ## How inputs are built
 
@@ -46,9 +44,6 @@ columns in `X`, so the remaining columns are taken from the selected field's
 average for that calendar month over 2021–2025 (text columns from its latest 2025
 record). The same feature engineering as the notebook is then applied
 (`Month_sin`, `Month_cos`, `Date_Index`, `Rainfall_per_WetDay`, `Temp_Range`).
-
-The 2-year forecast uses the same field × month averages, so 2026 and 2027 come
-out identical — CatBoost cannot extend a trend beyond the last training year.
 
 SHAP values come from CatBoost's built-in `ShapValues` (no `shap` package needed).
 One-hot and engineered columns are added back to their source feature (for

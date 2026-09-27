@@ -6,7 +6,6 @@ import PredictionResult from './pages/PredictionResult.jsx'
 import PredictionHistory from './pages/PredictionHistory.jsx'
 import ShapExplanation from './pages/ShapExplanation.jsx'
 import About from './pages/About.jsx'
-import YieldForecast from './pages/YieldForecast.jsx'
 import Logout from './pages/Logout.jsx'
 
 export default function App() {
@@ -19,7 +18,6 @@ export default function App() {
         <Route path="result" element={<PredictionResult />} />
         <Route path="history" element={<PredictionHistory />} />
         <Route path="shap" element={<ShapExplanation />} />
-        <Route path="forecast" element={<YieldForecast />} />
         <Route path="about" element={<About />} />
         <Route path="logout" element={<Logout />} />
         <Route path="*" element={<Navigate to="/new-prediction" replace />} />

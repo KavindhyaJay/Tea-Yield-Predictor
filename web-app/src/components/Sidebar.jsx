@@ -7,7 +7,6 @@ import {
   Info,
   LogOut,
   CircleDot,
-  CalendarRange,
 } from 'lucide-react'
 import Logo from './Logo.jsx'
 import { modelInfo } from '../data/modelInfo.js'
@@ -19,7 +18,6 @@ const navItems = [
   // there while it is open — as in Figure 13, panel 2.
   { to: '/new-prediction', label: 'New Prediction', icon: PenLine, alsoActiveOn: ['/result'] },
   { to: '/history', label: 'Prediction History', icon: Clock3 },
-  { to: '/forecast', label: 'Yield Forecast', icon: CalendarRange },
   { to: '/shap', label: 'SHAP Explanations', icon: BarChart3 },
   { to: '/about', label: 'About', icon: Info },
   { to: '/logout', label: 'Logout', icon: LogOut },

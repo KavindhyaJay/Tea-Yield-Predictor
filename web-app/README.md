@@ -31,7 +31,6 @@ The app starts on <http://localhost:5173> with mock data — no backend needed.
 | `/shap` | Waterfall, feature impact, info note | 3 — SHAP Explanation View |
 | `/dashboard` | Minimal overview | — |
 | `/history` | Past predictions table | — |
-| `/forecast` | 2-year monthly forecast by field (needs the backend) | — |
 | `/about` | Research and model notes | — |
 
 ## Project structure
@@ -68,7 +67,6 @@ mock data. Endpoints expected by the frontend:
 | `POST` | `/api/explain` | SHAP Explanation screen |
 | `GET` | `/api/predictions` | Prediction History, Dashboard |
 | `GET` | `/api/fields`, `/api/field-defaults` | Field Key select and form pre-fill |
-| `GET` | `/api/forecast`, `/api/forecast.csv` | Yield Forecast |
 
 The backend lives in `../backend` — see its README for how to run it.
 

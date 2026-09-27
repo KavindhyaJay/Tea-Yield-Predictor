@@ -1,6 +1,6 @@
 """
 Model service: loads the trained CatBoost pipeline and the 2021-2025 dataset,
-builds model input rows, predicts, forecasts and explains (SHAP).
+builds model input rows, predicts and explains (SHAP).
 
 Nothing here depends on FastAPI, so it can also be tested from a notebook:
 
@@ -11,7 +11,6 @@ Nothing here depends on FastAPI, so it can also be tested from a notebook:
 """
 from __future__ import annotations
 
-import io
 from datetime import datetime
 
 import joblib
@@ -151,10 +150,9 @@ class TeaYieldService:
         self._build_profiles()
         self._map_model_outputs()
         self._global_cache = None
-        self._forecast_cache = {}
 
     # ------------------------------------------------------------------
-    # field x month input profiles (same method as the notebook forecast)
+    # field x month input profiles used to fill prediction inputs
     # ------------------------------------------------------------------
     def _build_profiles(self):
         raw_cols = [c for c in self.df.columns if c not in ENGINEERED]
@@ -262,46 +260,6 @@ class TeaYieldService:
             "metrics": self.metrics,
             "shap_values": explanation["shap_values"],
         }
-
-    # ------------------------------------------------------------------
-    # 2-year (or any horizon) monthly forecast for every field
-    # ------------------------------------------------------------------
-    def forecast(self, years=None) -> pd.DataFrame:
-        years = tuple(int(y) for y in (years or [self.last_data_year + 1,
-                                                 self.last_data_year + 2]))
-        if years not in self._forecast_cache:
-            rows = self._rows(self.field_order, MONTHS, years)
-            pred = np.clip(self.pipeline.predict(rows[self.feature_columns]), 0, None)
-            out = rows[[FIELD, "Year", "Month", "Month_Num"]].copy()
-            out["Predicted_Yield_Month"] = np.round(pred, 3)
-            out["Extent"] = rows["Extent"].values if "Extent" in rows else np.nan
-            out[FIELD] = pd.Categorical(out[FIELD], self.field_order, ordered=True)
-            out = out.sort_values([FIELD, "Year", "Month_Num"]).reset_index(drop=True)
-            out[FIELD] = out[FIELD].astype(str)
-            self._forecast_cache[years] = out
-        return self._forecast_cache[years]
-
-    def forecast_json(self, years=None, field_key=None) -> dict:
-        fc = self.forecast(years)
-        if field_key:
-            fc = fc[fc[FIELD] == field_key]
-        rows = [{"field_key": r[FIELD], "year": int(r["Year"]), "month": r["Month"],
-                 "predicted": float(r["Predicted_Yield_Month"])}
-                for _, r in fc.iterrows()]
-        return {
-            "unit": "kg/ha",
-            "years": sorted(int(y) for y in fc["Year"].unique()),
-            "months": MONTHS,
-            "fields": self.field_order,
-            "base_years": [int(y) for y in self.base_years],
-            "rows": rows,
-        }
-
-    def forecast_csv(self, years=None) -> str:
-        fc = self.forecast(years).drop(columns=["Month_Num"])
-        buffer = io.StringIO()
-        fc.to_csv(buffer, index=False)
-        return buffer.getvalue()
 
     # ------------------------------------------------------------------
     # SHAP

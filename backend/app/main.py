@@ -7,9 +7,8 @@ Run from the backend folder:
 import os
 from pathlib import Path
 
-from fastapi import Body, FastAPI, HTTPException, Query
+from fastapi import Body, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
 
 from .history import HistoryStore
 from .model_service import TeaYieldService
@@ -31,15 +30,6 @@ app.add_middleware(CORSMiddleware, allow_origins=FRONTEND_ORIGINS,
 
 service = TeaYieldService(MODEL_PATH, DATA_PATH)
 history = HistoryStore(HISTORY_PATH)
-
-
-def _parse_years(years: str | None):
-    if not years:
-        return None
-    try:
-        return [int(y) for y in years.split(",") if y.strip()]
-    except ValueError:
-        raise HTTPException(400, "years must look like 2026,2027")
 
 
 @app.get("/api/health")
@@ -89,14 +79,3 @@ def predictions():
     return history.list()
 
 
-@app.get("/api/forecast")
-def forecast(years: str | None = Query(None, description="e.g. 2026,2027"),
-             field_key: str | None = None):
-    return service.forecast_json(_parse_years(years), field_key)
-
-
-@app.get("/api/forecast.csv")
-def forecast_csv(years: str | None = None):
-    csv = service.forecast_csv(_parse_years(years))
-    return Response(csv, media_type="text/csv", headers={
-        "Content-Disposition": "attachment; filename=FIELD_MONTHLY_PREDICTION.csv"})

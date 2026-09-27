@@ -122,21 +122,6 @@ export async function fetchFieldDefaults(fieldKey, month) {
   return getJson(`/api/field-defaults?${query}`)
 }
 
-/** Monthly forecast for every field (default: the two years after the data). */
-export async function fetchForecast(years) {
-  if (!API_URL) {
-    throw new Error('The forecast needs the backend. Set VITE_API_URL in .env and restart the app.')
-  }
-  const query = years?.length ? `?years=${years.join(',')}` : ''
-  return getJson(`/api/forecast${query}`)
-}
-
-/** Link to the forecast CSV served by the backend. */
-export function forecastCsvUrl(years) {
-  const query = years?.length ? `?years=${years.join(',')}` : ''
-  return `${API_URL}/api/forecast.csv${query}`
-}
-
 const mockFields = [
   { field_key: '10', extent: 2.67, age: 35 },
   { field_key: '11', extent: 3.1, age: 30 },

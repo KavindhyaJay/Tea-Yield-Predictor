@@ -36,5 +36,3 @@ TeaYield-Predictor/
 - **SHAP Explanations:** waterfall for this prediction plus global importance,
   beeswarm and dependence plots from the model.
 - **Prediction History:** every prediction, stored by the backend.
-- **Yield Forecast (new):** monthly prediction for every field, Jan 2026 – Dec 2027,
-  with a chart, field × month tables and a CSV download.
