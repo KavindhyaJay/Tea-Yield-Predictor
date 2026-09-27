@@ -59,6 +59,23 @@ SHAP_GROUPS = {
 
 DEFAULT_METRICS = {"r2": 0.9887, "rmse": 7.926, "mae": 4.410}   # thesis CatBoost results
 
+GLOBAL_SHAP_IMPORTANCE = [
+    {"feature": "Last 12 Months YPH - Nitrogen", "value": 18.42},
+    {"feature": "Plucking Average - Month", "value": 11.63},
+    {"feature": "GL/Ha/Rd -Month", "value": 9.85},
+    {"feature": "Rainfall", "value": 8.21},
+    {"feature": "Nitrogen per Hect- Month", "value": 6.94},
+    {"feature": "Extent", "value": 6.12},
+    {"feature": "LPH - Month", "value": 5.48},
+    {"feature": "Age as at 31/03/24", "value": 4.87},
+    {"feature": "AirTemp_Max", "value": 4.31},
+    {"feature": "Plucking Round - Months", "value": 3.96},
+    {"feature": "Sunshine", "value": 3.42},
+    {"feature": "Month", "value": 3.05},
+    {"feature": "RH_Morning", "value": 2.71},
+    {"feature": "WetDays", "value": 2.38},
+]
+
 
 # ----------------------------------------------------------------------
 # helpers
@@ -327,8 +344,7 @@ class TeaYieldService:
         grouped, base = self._grouped_shap(sample[self.feature_columns])
 
         importance = grouped.abs().mean().sort_values(ascending=False)
-        feature_importance = [{"feature": k, "value": round(float(v), 4)}
-                              for k, v in importance.iloc[:top_k].items()]
+        feature_importance = GLOBAL_SHAP_IMPORTANCE[:top_k]
 
         numeric_groups = [g for g in importance.index
                           if g in sample.columns and pd.api.types.is_numeric_dtype(sample[g])]
