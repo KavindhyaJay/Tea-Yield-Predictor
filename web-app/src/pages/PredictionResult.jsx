@@ -71,7 +71,7 @@ export default function PredictionResult() {
       {/* Cross-validation metrics */}
       <section className="ty-card mt-6">
         <h2 className="border-b border-line px-5 py-3.5 text-[15px] font-semibold text-ink">
-          Performance (Cross-Validation)
+          Performance 
         </h2>
         <div className="grid grid-cols-3 divide-x divide-line">
           {Object.entries(metricLabels).map(([key, label]) => (
