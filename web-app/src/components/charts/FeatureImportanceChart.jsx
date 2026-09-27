@@ -37,6 +37,12 @@ export default function FeatureImportanceChart({ data }) {
           tickLine={false}
           axisLine={false}
           tick={{ fontSize: 10 }}
+          label={{
+            value: 'Feature',
+            angle: -90,
+            position: 'insideLeft',
+            style: { fontSize: 11, fill: '#24332A' },
+          }}
         />
         <Tooltip
           cursor={{ fill: '#F4F8F5' }}
@@ -48,13 +54,13 @@ export default function FeatureImportanceChart({ data }) {
           formatter={(value) => [value.toFixed(2), 'Mean |SHAP|']}
         />
         <Bar dataKey="value" radius={[0, 2, 2, 0]} barSize={12}>
-          {rows.map((row, index) => (
-            <Cell key={row.feature} fill={index < 3 ? '#2F6B3E' : '#5FA86D'} />
+          {rows.map((row) => (
+            <Cell key={row.feature} fill="#287DB3" />
           ))}
           <LabelList
             dataKey="value"
             position="right"
-            formatter={(value) => value.toFixed(1)}
+            formatter={(value) => value.toFixed(2)}
             style={{ fontSize: 10, fill: '#66756B' }}
           />
         </Bar>

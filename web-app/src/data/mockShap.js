@@ -30,20 +30,20 @@ export const shapValues = [
  * Backend equivalent: `shap_importance`.
  */
 export const featureImportance = [
-  { feature: 'Last 12 Months YPH - Nitrogen', value: 71.4 },
-  { feature: 'Plucking Average - Month', value: 45.8 },
-  { feature: 'GL/Ha/Rd - Month', value: 33.2 },
-  { feature: 'Rainfall', value: 24.6 },
-  { feature: 'Nitrogen per Hect - Month', value: 19.1 },
-  { feature: 'LPH - Month', value: 15.7 },
-  { feature: 'Extent', value: 12.4 },
-  { feature: 'Age as at 31/03/24', value: 10.2 },
-  { feature: 'AirTemp_Max', value: 8.6 },
-  { feature: 'Plucking Round - Months', value: 7.3 },
-  { feature: 'Sunshine', value: 6.1 },
-  { feature: 'RH_Morning', value: 4.9 },
-  { feature: 'WetDays', value: 3.8 },
-  { feature: 'Month', value: 2.6 },
+  { feature: 'Last 12 Months YPH - Nitrogen', value: 18.42 },
+  { feature: 'Plucking Average - Month', value: 11.63 },
+  { feature: 'GL/Ha/Rd - Month', value: 9.85 },
+  { feature: 'Rainfall', value: 8.21 },
+  { feature: 'Nitrogen per Hect - Month', value: 6.94 },
+  { feature: 'Extent', value: 6.12 },
+  { feature: 'LPH - Month', value: 5.48 },
+  { feature: 'Age as at 31/03/24', value: 4.87 },
+  { feature: 'AirTemp_Max', value: 4.31 },
+  { feature: 'Plucking Round - Months', value: 3.96 },
+  { feature: 'Sunshine', value: 3.42 },
+  { feature: 'Month', value: 3.05 },
+  { feature: 'RH_Morning', value: 2.71 },
+  { feature: 'WetDays', value: 2.38 },
 ]
 
 /** Features shown in the beeswarm / dependence views, top-down. */

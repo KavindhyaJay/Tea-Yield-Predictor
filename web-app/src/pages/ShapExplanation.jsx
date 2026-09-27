@@ -120,7 +120,7 @@ export default function ShapExplanation() {
       {activeTab === TABS[1] ? (
         <div className="space-y-5">
           <section className="ty-card px-5 py-4">
-            <h2 className="text-[15px] font-semibold text-ink">Feature Importance</h2>
+            <h2 className="text-[15px] font-semibold text-ink">Global SHAP Feature Importance - CatBoost</h2>
             <p className="mb-4 mt-1 text-xs text-muted">
               Mean absolute SHAP value of each feature across the evaluation set
             </p>
